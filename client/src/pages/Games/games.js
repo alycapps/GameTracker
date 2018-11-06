@@ -30,23 +30,25 @@ class Games extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    let vg = this.state.name;
-    console.log(vg);
-    console.log("handleformsubmit ran");
-    const client = igdb('b0e6353cdadb85ab1d11bcc5341f5963');
-    console.log(client);
-    console.log("client");
-    
-    client.games({
-      fields: '*', // Return all fields
-      limit: 5, // Limit to 5 results
-      search: vg
-    }).then(response => {
-      // response.body contains the parsed JSON response to this query
-      console.log(response.body)
-    }).catch(error => {
-      throw error;
-    });
+    var searchterm = this.state.name;
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+    targetUrl = 'https://api-endpoint.igdb.com/games/?search=' + searchterm + '&fields=*&limit=5"'
+    fetch(proxyUrl + targetUrl, {
+      headers: {
+        'user-key': 'b0e6353cdadb85ab1d11bcc5341f5963',
+        'Accept': 'application/json'
+      }
+    })
+      .then(blob => blob.json())
+      .then(data => {
+        console.log(data)
+        return data;
+      })
+      .catch(e => {
+        console.log(e);
+        return e;
+      });
+
   };
 
   render() {
