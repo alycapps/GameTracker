@@ -23,14 +23,14 @@ const Nav = (props) => {
   }
   
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-warning">
       <Col size="md-2">
-        <Link to="/" className="navbar-brand">Game Tracker</Link>
+        <Link to="/" className="navbar-brand" style={{color:"#22b24c"}}>Game Tracker</Link>
       </Col>
       <Col size="md-7"></Col>
       <Col size="md-3">
         <div className="float-right">
-        {greeting} - <Link to="#" className="logout" onClick={props.logout}>Logout</Link>
+        {greeting} - <Link to="#" className="logout" onClick={props.logout} style={{color:"#22b24c"}}>Logout</Link>
         </div>
       </Col>
     </nav>

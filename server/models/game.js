@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
   name: { type: String, required: true },
-  system: { type: String },
-  description: String,
+  platforms: { type: String },
+  summary: String,
   releaseDate: { type: Date, default: Date.now }
 });
 
