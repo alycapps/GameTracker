@@ -27,6 +27,10 @@ class Games extends Component {
     });
   };
 
+  savetoMongo = event => {
+
+  };
+
   handleFormSubmit = event => {
     event.preventDefault();
     var searchterm = this.state.name;
@@ -45,6 +49,13 @@ class Games extends Component {
         div.innerHTML += " <h3>Select the game you are looking for.</h3> <p>If none of these look correct try modifying your search.</p>"
         data.forEach(g => {
           div.innerHTML += JSON.stringify(g.name);
+          let b = document.createElement('button');
+            b.setAttribute('id', g.id);
+            b.setAttribute('class', 'btn');
+            b.setAttribute('onClick', 'savetoMongo');
+            b.innerHTML = 'Save Game';
+          div.appendChild(b);
+          div.innerHTML += "<br>";
         });
         return data;
       })
