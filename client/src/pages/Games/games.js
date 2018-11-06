@@ -5,7 +5,6 @@ import { Col, Row, Container } from "../../components/Grid";
 import { Input, FormBtn } from "../../components/Form";
 import { List, ListItem } from "../../components/List";
 import DeleteBtn from "../../components/DeleteBtn";
-import igdb from "igdb-api-node";
 
 class Games extends Component {
   state = {
@@ -42,6 +41,11 @@ class Games extends Component {
       .then(blob => blob.json())
       .then(data => {
         console.log(data)
+        let div = document.getElementById('searchResults')
+        div.innerHTML += " <h3>Select the game you are looking for.</h3> <p>If none of these look correct try modifying your search.</p>"
+        data.forEach(g => {
+          div.innerHTML += JSON.stringify(g.name);
+        });
         return data;
       })
       .catch(e => {
@@ -73,6 +77,11 @@ class Games extends Component {
                 Find Game
               </FormBtn>
             </form>
+            <br></br>
+            <br></br>
+            <div id="searchResults">
+      
+            </div>
           </Col>
           <Col size="md-6 sm-12">
 
