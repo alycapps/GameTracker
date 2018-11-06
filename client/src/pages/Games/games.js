@@ -5,6 +5,7 @@ import { Col, Row, Container } from "../../components/Grid";
 import { Input, FormBtn } from "../../components/Form";
 import { List, ListItem } from "../../components/List";
 import DeleteBtn from "../../components/DeleteBtn";
+import API from "../../utils/API";
 
 class Games extends Component {
   state = {
@@ -17,7 +18,7 @@ class Games extends Component {
   };
 
   componentDidMount() {
-    
+    this.loadGames();
   };
 
   handleInputChange = event => {
@@ -27,8 +28,28 @@ class Games extends Component {
     });
   };
 
-  savetoMongo = event => {
+  loadGames = () => {
+    API.getGames()
+    .then(res =>
+      this.setState({ games: res.data })
+    )
+    .catch(err => console.log(err));
+  };
 
+  changeState = event => {
+    this.setState({ 
+      name: event.target.value, 
+      id: event.target.id
+    })
+    this.savetoMongo();
+  };
+
+  savetoMongo = () => {
+    API.saveGame({
+      name: this.state.name,
+      id: this.state.id
+    }).then(res => this.loadGames())
+    .catch(err => console.log(err));
   };
 
   handleFormSubmit = event => {
@@ -51,8 +72,9 @@ class Games extends Component {
           div.innerHTML += JSON.stringify(g.name);
           let b = document.createElement('button');
             b.setAttribute('id', g.id);
+            b.setAttribute('name', g.name);
             b.setAttribute('class', 'btn');
-            b.setAttribute('onClick', 'savetoMongo');
+            b.setAttribute('onClick', this.savetoMongo);
             b.innerHTML = 'Save Game';
           div.appendChild(b);
           div.innerHTML += "<br>";
@@ -91,7 +113,7 @@ class Games extends Component {
             <br></br>
             <br></br>
             <div id="searchResults">
-      
+
             </div>
           </Col>
           <Col size="md-6 sm-12">
