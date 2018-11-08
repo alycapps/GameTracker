@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Jumbotron from "../../components/Jumbotron";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { Input, FormBtn } from "../../components/Form";
-import { List, ListItem } from "../../components/List";
+// import { List, ListItem } from "../../components/List";
 import DeleteBtn from "../../components/DeleteBtn";
 import API from "../../utils/API";
+// import { ListItem } from "../../../../../GLAMobile/client/src/components/List";
 
 class Games extends Component {
   state = {
@@ -43,8 +44,10 @@ class Games extends Component {
   };
 
   changeState = event => {
+    console.log(event);
+    console.log("event");
     this.setState({ 
-      name: event.target.value, 
+      name: event.target.name, 
       id: event.target.id
     })
     console.log(event.target);
@@ -81,11 +84,11 @@ class Games extends Component {
       data.forEach(g => {
         div.innerHTML += JSON.stringify(g.name);
         let b = document.createElement('button');
-          b.setAttribute('id', g.id);
-          b.setAttribute('name', g.name);
-          b.setAttribute('class', 'btn');
-          b.addEventListener("click", this.savetoMongo());
-          b.innerHTML = 'Save Game';
+        b.setAttribute('id', g.id);
+        b.setAttribute('name', g.name);
+        b.setAttribute('class', 'btn');
+        b.addEventListener("click", this.savetoMongo(), false);
+        b.innerHTML = 'Save Game';
         div.appendChild(b);
         div.innerHTML += "<br>";
       });
@@ -133,17 +136,18 @@ class Games extends Component {
               <div className="accordion" id="accordionExample">
                 {this.state.games.map(game => (
                   <div className="card">
-                    <div className="card-header" id="headingOne" style={{backgroundColor:"#c8b7b5"}}>
+                    <div className="card-header" id="headingOne" style={{backgroundColor:"#22b24c"}}>
                       <h5 className="mb-0">
-                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          {game.username}
+                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={{color:"white"}}>
+                          {game.name}
                         </button>
                       </h5>
                     </div>
                     <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                       <div className="card-body">
-                        {game.summary}
-                        Description goes here.
+                          <p> {game.releaseDate} </p>
+                          <p> {game.summary} </p>                        
+                          <p> Description goes here.</p>
                         <DeleteBtn onClick={() => this.handleDeleteGame(game._id)} />
                       </div>
                     </div>
