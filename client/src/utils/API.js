@@ -23,4 +23,7 @@ export default {
   getGames: function() {
     return axios.get("/api/games");
   },
+  deleteGame: function(id) {
+    return axios.delete("/api/games/" + id);
+  }
 };

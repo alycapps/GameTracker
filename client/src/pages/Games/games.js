@@ -28,6 +28,12 @@ class Games extends Component {
     });
   };
 
+  handleDeleteGame = id => {
+    API.deleteGame(id)
+      .then(res => this.loadGames())
+      .catch(err => console.log(err));
+  };
+
   loadGames = () => {
     API.getGames()
     .then(res =>
@@ -41,10 +47,13 @@ class Games extends Component {
       name: event.target.value, 
       id: event.target.id
     })
+    console.log(event.target);
+    console.log(this.state);
     this.savetoMongo();
   };
 
   savetoMongo = () => {
+    console.log("save function ran")
     API.saveGame({
       name: this.state.name,
       id: this.state.id
@@ -63,29 +72,29 @@ class Games extends Component {
         'Accept': 'application/json'
       }
     })
-      .then(blob => blob.json())
-      .then(data => {
-        console.log(data)
-        let div = document.getElementById('searchResults')
-        div.innerHTML += " <h3>Select the game you are looking for.</h3> <p>If none of these look correct try modifying your search.</p>"
-        data.forEach(g => {
-          div.innerHTML += JSON.stringify(g.name);
-          let b = document.createElement('button');
-            b.setAttribute('id', g.id);
-            b.setAttribute('name', g.name);
-            b.setAttribute('class', 'btn');
-            b.setAttribute('onClick', this.savetoMongo);
-            b.innerHTML = 'Save Game';
-          div.appendChild(b);
-          div.innerHTML += "<br>";
-        });
-        return data;
-      })
-      .catch(e => {
-        console.log(e);
-        return e;
+    .then(blob => blob.json())
+    .then(data => {
+      console.log(data)
+      let div = document.getElementById('searchResults')
+      div.innerHTML = ""
+      div.innerHTML += " <h3>Select the game you are looking for.</h3> <p>If none of these look correct try modifying your search.</p>"
+      data.forEach(g => {
+        div.innerHTML += JSON.stringify(g.name);
+        let b = document.createElement('button');
+          b.setAttribute('id', g.id);
+          b.setAttribute('name', g.name);
+          b.setAttribute('class', 'btn');
+          b.addEventListener("click", this.savetoMongo());
+          b.innerHTML = 'Save Game';
+        div.appendChild(b);
+        div.innerHTML += "<br>";
       });
-
+      return data;
+    })
+    .catch(e => {
+      console.log(e);
+      return e;
+    });
   };
 
   render() {
@@ -117,30 +126,36 @@ class Games extends Component {
             </div>
           </Col>
           <Col size="md-6 sm-12">
-
             <Jumbotron>
               <h1>My Collection</h1>
             </Jumbotron>
             {this.state.games.length ? (
-              <List>
+              <div className="accordion" id="accordionExample">
                 {this.state.games.map(game => (
-                  <ListItem key={game._id}>
-                    <Link to={"/games/" + game._id}>
-                      <strong>
-                        {game.name} -- {game.summary}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(game._id)} />
-                  </ListItem>
+                  <div className="card">
+                    <div className="card-header" id="headingOne" style={{backgroundColor:"#c8b7b5"}}>
+                      <h5 className="mb-0">
+                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          {game.username}
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      <div className="card-body">
+                        {game.summary}
+                        Description goes here.
+                        <DeleteBtn onClick={() => this.handleDeleteGame(game._id)} />
+                      </div>
+                    </div>
+                  </div>   
                 ))}
-              </List>
+              </div>
             ) : (
-              <h3>No Results to Display</h3>
+              <h3>Search for a New Game to add to your collection</h3>
             )}
           </Col>
         </Row>
       </Container>
-
     );
   }
 }
