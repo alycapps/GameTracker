@@ -6,6 +6,7 @@ import { Input, FormBtn } from "../../components/Form";
 // import { List, ListItem } from "../../components/List";
 import DeleteBtn from "../../components/DeleteBtn";
 import API from "../../utils/API";
+import Accordion from "../../components/Accordion"
 // import { ListItem } from "../../../../../GLAMobile/client/src/components/List";
 
 class Games extends Component {
@@ -77,7 +78,7 @@ class Games extends Component {
     })
     .then(blob => blob.json())
     .then(data => {
-      console.log(data)
+      console.log('results from search', data)
       let div = document.getElementById('searchResults')
       div.innerHTML = ""
       div.innerHTML += " <h3>Select the game you are looking for.</h3> <p>If none of these look correct try modifying your search.</p>"
@@ -87,6 +88,7 @@ class Games extends Component {
         b.setAttribute('id', g.id);
         b.setAttribute('name', g.name);
         b.setAttribute('class', 'btn');
+        //is the below line calling savetoMongo on page refresh?
         b.addEventListener("click", this.savetoMongo(), false);
         b.innerHTML = 'Save Game';
         div.appendChild(b);
@@ -132,7 +134,20 @@ class Games extends Component {
             <Jumbotron>
               <h1>My Collection</h1>
             </Jumbotron>
+            
+            
             {this.state.games.length ? (
+              <Accordion
+              games={this.state.games}
+              handleDelete={this.handleDeleteGame}
+              >    
+              </Accordion>
+            ) : (
+              <h3>Search for a New Game to add to your collection</h3>
+            )}
+
+
+            {/* {this.state.games.length ? (
               <div className="accordion" id="accordionExample">
                 {this.state.games.map(game => (
                   <div className="card">
@@ -156,7 +171,13 @@ class Games extends Component {
               </div>
             ) : (
               <h3>Search for a New Game to add to your collection</h3>
-            )}
+            )} */}
+
+
+
+
+
+
           </Col>
         </Row>
       </Container>
