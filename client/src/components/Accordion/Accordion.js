@@ -4,7 +4,7 @@ import DeleteBtn from "../../components/DeleteBtn";
 const Accordion = props => (
   <div>
     <div className="accordion" id="accordionExample">
-      {props.games.map(game => (
+      {props.collection.map(game => (
         <div className="card">
           <div className="card-header" id="headingOne" style={{backgroundColor:"#22b24c"}}>
             <h5 className="mb-0">

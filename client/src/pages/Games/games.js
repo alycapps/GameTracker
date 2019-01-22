@@ -4,7 +4,7 @@ import Jumbotron from "../../components/Jumbotron";
 import { Col, Row, Container } from "../../components/Grid";
 import { Input, FormBtn } from "../../components/Form";
 // import { List, ListItem } from "../../components/List";
-import DeleteBtn from "../../components/DeleteBtn";
+// import DeleteBtn from "../../components/DeleteBtn";
 import API from "../../utils/API";
 import Accordion from "../../components/Accordion"
 // import { ListItem } from "../../../../../GLAMobile/client/src/components/List";
@@ -23,6 +23,7 @@ class Games extends Component {
     this.loadGames();
   };
 
+  // function to change state to value changed
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -30,12 +31,14 @@ class Games extends Component {
     });
   };
 
+  // function to delete game
   handleDeleteGame = id => {
     API.deleteGame(id)
       .then(res => this.loadGames())
       .catch(err => console.log(err));
   };
 
+  // function to load all games saved in mongo
   loadGames = () => {
     API.getGames()
     .then(res =>
@@ -44,18 +47,20 @@ class Games extends Component {
     .catch(err => console.log(err));
   };
 
-  changeState = event => {
-    console.log(event);
-    console.log("event");
-    this.setState({ 
-      name: event.target.name, 
-      id: event.target.id
-    })
-    console.log(event.target);
-    console.log(this.state);
-    this.savetoMongo();
-  };
+  // function to change state
+  // changeState = event => {
+  //   console.log(event);
+  //   console.log("event");
+  //   this.setState({ 
+  //     name: event.target.name, 
+  //     id: event.target.id
+  //   })
+  //   console.log(event.target);
+  //   console.log(this.state);
+  //   this.savetoMongo();
+  // };
 
+  // function to save new game to mongo
   savetoMongo = () => {
     console.log("save function ran")
     API.saveGame({
@@ -65,6 +70,7 @@ class Games extends Component {
     .catch(err => console.log(err));
   };
 
+  // function to fetch data from API and display results
   handleFormSubmit = event => {
     event.preventDefault();
     var searchterm = this.state.name;
@@ -138,7 +144,7 @@ class Games extends Component {
             
             {this.state.games.length ? (
               <Accordion
-              games={this.state.games}
+              collection={this.state.games}
               handleDelete={this.handleDeleteGame}
               >    
               </Accordion>

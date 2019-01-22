@@ -73,7 +73,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={() => <Games user={this.state.user}/>} />
                 <Route exact path="/games" component={() => <Games user={this.state.user}/>} />
-                <Route exact path="/gamess/:id" component={Detail} />
+                <Route exact path="/games/:id" component={Detail} />
                 <Route component={NoMatch} />
               </Switch>
             </div>
