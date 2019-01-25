@@ -89,19 +89,7 @@ class Games extends Component {
       let div = document.getElementById('searchResults')
       div.innerHTML = ""
       div.innerHTML += " <h3>Select the game you are looking for.</h3> <p>If none of these look correct try modifying your search.</p>"
-      // data.map(g => 
-      //   console.log(g)
-      //   div.innerHTML += JSON.stringify(g.name)
-      //   let b = document.createElement('button')
-      //   b.setAttribute('id', g.id)
-      //   b.setAttribute('name', g.name)
-      //   b.setAttribute('class', 'btn')
-      //   //is the below line calling savetoMongo on page refresh?
-      //   b.addEventListener("click", this.savetoMongo(event), false)
-      //   b.innerHTML = 'Save Game'
-      //   div.appendChild(b)
-      //   div.innerHTML += "<br>"
-      // )
+      
       data.forEach(g => {
         console.log(g)
         div.innerHTML += JSON.stringify(g.name);
