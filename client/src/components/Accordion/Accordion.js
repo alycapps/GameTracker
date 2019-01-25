@@ -1,5 +1,6 @@
 import React from "react";
 import DeleteBtn from "../../components/DeleteBtn";
+import { Link } from "react-router-dom";
 
 const Accordion = props => (
   <div>
@@ -9,7 +10,9 @@ const Accordion = props => (
           <div className="card-header" id="headingOne" style={{backgroundColor:"#22b24c"}}>
             <h5 className="mb-0">
               <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={{color:"white"}}>
-                {game.name}
+                <Link to={"/games/" + game._id}>
+                  {game.name}
+                </Link>
               </button>
             </h5>
           </div>
