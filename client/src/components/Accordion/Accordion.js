@@ -6,7 +6,7 @@ const Accordion = props => (
   <div>
     <div className="accordion" id="accordionExample">
       {props.collection.map(game => (
-        <div className="card">
+        <div key={game._id} className="card">
           <div className="card-header" id="headingOne" style={{backgroundColor:"#22b24c"}}>
             <h5 className="mb-0">
               <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={{color:"white"}}>

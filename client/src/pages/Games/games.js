@@ -7,6 +7,7 @@ import { Input, FormBtn } from "../../components/Form";
 // import DeleteBtn from "../../components/DeleteBtn";
 import API from "../../utils/API";
 import Accordion from "../../components/Accordion"
+import Options from "../../components/Options"
 // import { ListItem } from "../../../../../GLAMobile/client/src/components/List";
 
 class Games extends Component {
@@ -16,7 +17,8 @@ class Games extends Component {
     name: "",
     platforms: "",
     summary: "",
-    releaseDate: ""
+    releaseDate: "",
+    options: []
   };
 
   componentDidMount() {
@@ -47,33 +49,24 @@ class Games extends Component {
     .catch(err => console.log(err));
   };
 
-  // function to change state
-  // changeState = event => {
-  //   console.log(event);
-  //   console.log("event");
-  //   this.setState({ 
-  //     name: event.target.name, 
-  //     id: event.target.id
-  //   })
-  //   console.log(event.target);
-  //   console.log(this.state);
-  //   this.savetoMongo();
-  // };
-
   // function to save new game to mongo
-  savetoMongo = (event) => {
+  // NEED TO FIX BELOW FUNCTION--THE EVENT.TARGET NO LONGER WORKS BUT EVERYTHING ELSE DOES 
+  savetoMongo = id => {
     console.log("save function ran")
-    API.saveGame({
-      name: event.target.name,
-      id: event.target.id,
-      releaseDate: event.target.releaseDate
-    }).then(res => this.loadGames())
-    .catch(err => console.log(err));
+    var game = "this.state.options" + id;
+    console.log(game, "game")
+    // API.saveGame({
+    //   name: event.target.name,
+    //   id: event.target.id,
+    //   url: event.target.url
+    // }).then(res => this.loadGames())
+    // .catch(err => console.log(err));
   };
 
   // function to fetch data from API and display results
   handleFormSubmit = event => {
     event.preventDefault();
+    console.log("handle form submit ran");
     var searchterm = this.state.name;
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
     targetUrl = 'https://api-endpoint.igdb.com/games/?search=' + searchterm + '&fields=*&limit=5"'
@@ -85,25 +78,12 @@ class Games extends Component {
     })
     .then(blob => blob.json())
     .then(data => {
-      console.log('results from search', data)
-      let div = document.getElementById('searchResults')
-      div.innerHTML = ""
-      div.innerHTML += " <h3>Select the game you are looking for.</h3> <p>If none of these look correct try modifying your search.</p>"
-      
-      data.forEach(g => {
-        console.log(g)
-        div.innerHTML += JSON.stringify(g.name);
-        let b = document.createElement('button');
-        b.setAttribute('id', g.id);
-        b.setAttribute('name', g.name);
-        b.setAttribute('releaseDate', g.releaseDate);
-        b.setAttribute('class', 'btn');
-        //is the below line calling savetoMongo on page refresh?
-        b.addEventListener("click", this.savetoMongo, false);
-        b.innerHTML = 'Save Game';
-        div.appendChild(b);
-        div.innerHTML += "<br>";
+      this.setState({ options: data },
+      () => {
+        console.log(this.state.options);
+        console.log("options")
       });
+
       return data;
     })
     .catch(e => {
@@ -136,7 +116,21 @@ class Games extends Component {
             </form>
             <br></br>
             <br></br>
+
             <div id="searchResults">
+
+              {this.state.options.length ? (
+                <div> 
+                  <Options
+                    collection={this.state.options}
+                    handleSave={this.savetoMongo}
+                  >
+                  </Options>
+                  <p>Yay it saved</p>
+                </div>
+              ) : (
+                <h4>Search for a New Game to add to your collection</h4>
+              )}
 
             </div>
           </Col>
@@ -155,38 +149,6 @@ class Games extends Component {
             ) : (
               <h3>Search for a New Game to add to your collection</h3>
             )}
-
-
-            {/* {this.state.games.length ? (
-              <div className="accordion" id="accordionExample">
-                {this.state.games.map(game => (
-                  <div className="card">
-                    <div className="card-header" id="headingOne" style={{backgroundColor:"#22b24c"}}>
-                      <h5 className="mb-0">
-                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={{color:"white"}}>
-                          {game.name}
-                        </button>
-                      </h5>
-                    </div>
-                    <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                      <div className="card-body">
-                          <p> {game.releaseDate} </p>
-                          <p> {game.summary} </p>                        
-                          <p> Description goes here.</p>
-                        <DeleteBtn onClick={() => this.handleDeleteGame(game._id)} />
-                      </div>
-                    </div>
-                  </div>   
-                ))}
-              </div>
-            ) : (
-              <h3>Search for a New Game to add to your collection</h3>
-            )} */}
-
-
-
-
-
 
           </Col>
         </Row>
