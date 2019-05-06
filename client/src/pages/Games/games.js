@@ -55,12 +55,14 @@ class Games extends Component {
     console.log("save function ran")
     var game = "this.state.options" + id;
     console.log(game, "game")
-    // API.saveGame({
-    //   name: event.target.name,
-    //   id: event.target.id,
-    //   url: event.target.url
-    // }).then(res => this.loadGames())
-    // .catch(err => console.log(err));
+    console.log(this.state.options, "options")
+    API.saveGame({
+      name: this.state.options[1].name,
+      id: this.state.options[1].id,
+      url: this.state.options[1].url,
+      summary: this.state.options[1].summary
+    }).then(res => this.loadGames())
+    .catch(err => console.log(err));
   };
 
   // function to fetch data from API and display results
@@ -126,7 +128,6 @@ class Games extends Component {
                     handleSave={this.savetoMongo}
                   >
                   </Options>
-                  <p>Yay it saved</p>
                 </div>
               ) : (
                 <h4>Search for a New Game to add to your collection</h4>

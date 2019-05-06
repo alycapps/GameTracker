@@ -20,7 +20,6 @@ const Accordion = props => (
             <div className="card-body">
                 <p> {game.releaseDate} </p>
                 <p> {game.summary} </p>                        
-                <p> Description goes here.</p>
               <DeleteBtn onClick={() => props.handleSave(game._id)} />
 
             </div>
