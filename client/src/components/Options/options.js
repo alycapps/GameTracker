@@ -19,7 +19,7 @@ const Options = props => (
             <div className="card-body">
                 <p> {response.url} </p>
                 <p> {response.summary} </p>                        
-              <button onClick={() => props.handleSave(response.id)} className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={{color:"white"}}>
+              <button onClick={() => props.handleSave(response.id)} className="btn btn-link btn-success" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
                 Save
               </button>
             </div>

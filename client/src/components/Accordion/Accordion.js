@@ -21,7 +21,8 @@ const Accordion = props => (
                 <p> {game.releaseDate} </p>
                 <p> {game.summary} </p>                        
                 <p> Description goes here.</p>
-              <DeleteBtn onClick={() => props.handleDelete(game._id)} />
+              <DeleteBtn onClick={() => props.handleSave(game._id)} />
+
             </div>
           </div>
         </div>   
