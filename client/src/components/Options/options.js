@@ -5,11 +5,11 @@ const Options = props => (
   <div>
    <div className="accordion" id="accordionExample">
       {props.collection.map(response => (
-        <div className="card">
-          <div className="card-header" id="headingOne" style={{backgroundColor:"#22b24c"}}>
+        <div key={response.id} className="card">
+          <div className="card-header" id="headingOne" style={{backgroundColor:"#f5e625", color:"navy"}}>
             <h5 className="mb-0">
               <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={{color:"white"}}>
-                <Link to={"/games/" + response.id}>
+                <Link style={{color:"navy"}} to={"/games/" + response.id}>
                   {response.name}
                 </Link>
               </button>

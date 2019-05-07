@@ -10,7 +10,7 @@ const Accordion = props => (
           <div className="card-header" id="headingOne" style={{backgroundColor:"#22b24c"}}>
             <h5 className="mb-0">
               <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={{color:"white"}}>
-                <Link to={"/games/" + game._id}>
+                <Link style={{color:"navy"}} to={"/games/" + game._id}>
                   {game.name}
                 </Link>
               </button>
@@ -20,7 +20,7 @@ const Accordion = props => (
             <div className="card-body">
                 <p> {game.releaseDate} </p>
                 <p> {game.summary} </p>                        
-              <DeleteBtn onClick={() => props.handleSave(game._id)} />
+              <DeleteBtn onClick={() => props.handleDelete(game._id)} />
 
             </div>
           </div>

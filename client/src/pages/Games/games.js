@@ -50,19 +50,22 @@ class Games extends Component {
   };
 
   // function to save new game to mongo
-  // NEED TO FIX BELOW FUNCTION--THE EVENT.TARGET NO LONGER WORKS BUT EVERYTHING ELSE DOES 
   savetoMongo = id => {
     console.log("save function ran")
     var game = "this.state.options" + id;
     console.log(game, "game")
     console.log(this.state.options, "options")
-    API.saveGame({
-      name: this.state.options[1].name,
-      id: this.state.options[1].id,
-      url: this.state.options[1].url,
-      summary: this.state.options[1].summary
-    }).then(res => this.loadGames())
-    .catch(err => console.log(err));
+    for (let i=0; i<this.state.options; i++) {
+      if(this.state.options[i].id === id) {
+        API.saveGame({
+          name: this.state.options[i].name,
+          id: this.state.options[i].id,
+          url: this.state.options[i].url,
+          summary: this.state.options[i].summary
+        }).then(res => this.loadGames())
+        .catch(err => console.log(err));
+      }
+    }
   };
 
   // function to fetch data from API and display results
