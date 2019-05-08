@@ -4,7 +4,7 @@ import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
 
-class Detail extends Component {
+class Add extends Component {
   state = {
     game: {}
   };
@@ -19,34 +19,26 @@ class Detail extends Component {
   render() {
     return (
       <Container fluid>
+
         <Row>
           <Col size="md-12">
             <Jumbotron>
               <h1>
-                {this.state.game.name}
+                Add
               </h1>
-              <p>I paid: {this.state.game.paid}</p>
-              <p>Current Price: {this.state.game.current}</p>
             </Jumbotron>
           </Col>
         </Row>
        
         <Row>
-          <Col size="md-3"></Col>
-          <Col size="md-6">
-            {this.state.game.summary}
+          <Col size="md-2">
+            <Link to="/collection">← Back to Collection</Link>
           </Col>
-          <Col size="md-3"></Col>
         </Row>
 
-        <Row>
-          <Col size="md-2">
-            <Link to="/">← Back to Home</Link>
-          </Col>
-        </Row>
       </Container>
     );
   }
 }
 
-export default Detail;
+export default Add;

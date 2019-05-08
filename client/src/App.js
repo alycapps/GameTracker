@@ -5,6 +5,8 @@ import SignupForm from './pages/Auth/SignupForm';
 import Nav from "./components/Nav";
 import Games from './pages/Games'
 import Detail from "./pages/Detail";
+import Add from "./pages/Add"
+import Collection from "./pages/Collection"
 import NoMatch from "./pages/NoMatch";
 import AUTH from './utils/AUTH';
 
@@ -74,6 +76,8 @@ class App extends Component {
                 <Route exact path="/" component={() => <Games user={this.state.user}/>} />
                 <Route exact path="/games" component={() => <Games user={this.state.user}/>} />
                 <Route exact path="/games/:id" component={Detail} />
+								<Route exact path="/collection" component={Collection} />
+								<Route exact path="/add" component={Add} />
                 <Route component={NoMatch} />
               </Switch>
             </div>

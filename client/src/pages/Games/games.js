@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import Jumbotron from "../../components/Jumbotron";
-// import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { Input, FormBtn } from "../../components/Form";
-// import { List, ListItem } from "../../components/List";
-// import DeleteBtn from "../../components/DeleteBtn";
 import API from "../../utils/API";
 import Accordion from "../../components/Accordion"
 import Options from "../../components/Options"
-// import { ListItem } from "../../../../../GLAMobile/client/src/components/List";
 
 class Games extends Component {
   state = {
@@ -53,19 +49,20 @@ class Games extends Component {
   savetoMongo = id => {
     console.log("save function ran")
     var game = "this.state.options" + id;
-    console.log(game, "game")
-    console.log(this.state.options, "options")
-    for (let i=0; i<this.state.options; i++) {
-      if(this.state.options[i].id === id) {
+    console.log(game, "game");
+    console.log(this.state.options, "options");
+      this.state.options.map( x => {
+        if(x.id == id) {
         API.saveGame({
-          name: this.state.options[i].name,
-          id: this.state.options[i].id,
-          url: this.state.options[i].url,
-          summary: this.state.options[i].summary
+          name: x.name,
+          id: x.id,
+          url: x.url,
+          summary: x.summary
         }).then(res => this.loadGames())
         .catch(err => console.log(err));
+        }
       }
-    }
+    )
   };
 
   // function to fetch data from API and display results
