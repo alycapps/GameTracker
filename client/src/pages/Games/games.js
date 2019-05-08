@@ -47,22 +47,17 @@ class Games extends Component {
 
   // function to save new game to mongo
   savetoMongo = id => {
-    console.log("save function ran")
-    var game = "this.state.options" + id;
-    console.log(game, "game");
-    console.log(this.state.options, "options");
-      this.state.options.map( x => {
-        if(x.id == id) {
-        API.saveGame({
-          name: x.name,
-          id: x.id,
-          url: x.url,
-          summary: x.summary
-        }).then(res => this.loadGames())
-        .catch(err => console.log(err));
-        }
+    this.state.options.map( x => {
+      if(x.id == id) {
+      API.saveGame({
+        name: x.name,
+        id: x.id,
+        url: x.url,
+        summary: x.summary
+      }).then(res => this.loadGames())
+      .catch(err => console.log(err));
       }
-    )
+    })
   };
 
   // function to fetch data from API and display results
